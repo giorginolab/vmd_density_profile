@@ -1,0 +1,34 @@
+structure of a split plugin
+
+package provide chirality_gui 1.1
+namespace eval ::chirality::GUI:: {
+proc chirality_gui { } { return [eval ::chirality::GUI::chirality_gui] }
+
+
+...
+
+package provide chirality 1.1
+namespace eval ::chirality:: {
+
+
+CHIRALITY
+	       Core	     Gui
+namespace      ::what::	     ::what::GUI::
+package	       what	     what_gui
+filename       what.tcl	     what_gui.tcl
+
+MINE
+	       Core	     Gui
+namespace      ::what::	     ::what::
+package	       what	     what_gui   (free)
+filename       what_core.tcl what.tcl   (= namespace)
+
+
+
+Guibuilder uses the namespace (first level) given as file name
+
+Saving as nnn::mmm works, but may create problems in windows
+
+Solution: do not use sub-namespace, but make a different package
+
+
