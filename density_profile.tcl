@@ -86,6 +86,12 @@ proc ::density_profile::density_profile {args} {
     set framelist [hist_to_frames $lhist]
     set values [hist_to_values $hist]
 
+    # If averaging or single-frame, flatten inner list
+    if { $dp_args(average)==1 || [llength $framelist]==1 } {
+	set values [average_sublists $values]
+    }
+
+    return [list $values $xbreaks]
 
 }
 
@@ -120,7 +126,7 @@ proc ::density_profile::hist_to_frames {lhist} {
 }
 
 
-# Values, return { {0.23 0} {0 0.42} {0.21 0} {0 0.40}
+# Values, return { {0.23 0} {0 0.42} {0.21 0} {0 0.40} }
 proc ::density_profile::hist_to_values {lhist} {
     variable dp_args
     array set hist [array get $lhist]
@@ -141,6 +147,15 @@ proc ::density_profile::hist_to_values {lhist} {
 }
 
 
+# Average sublists: { {0.23 0} {0 0.42} {0.21 0} {0 0.40} } -> { 0.125
+# 0.21 0.105 0.20 }. Also useful for flattening in case of one frame
+proc ::density_profile::average_sublists {vl} {
+    set res {}
+    foreach l $vl {
+	lappend res [vecmean $l]
+    }
+    return $res
+}
 
 
 

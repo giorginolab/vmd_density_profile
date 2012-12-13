@@ -63,7 +63,7 @@ proc density_profile_gui::do_plot {} {
     variable area
 
     # Make sure pbcs are set or warn
-    set area [assertpbc]
+    set area [transverse_area]
     if { $area == -1 } { 	
 	set answer [ tk_messageBox -icon question -message "No periodic cell information. Will compute linear densities instead of volume densities. Continue?" -type okcancel ]
 	switch -- $answer {
