@@ -84,7 +84,7 @@ proc ::density_profile::density_profile {args} {
     set lhist [compute]
     set xbreaks [hist_to_xbreaks $lhist]
     set framelist [hist_to_frames $lhist]
-    set values [hist_to_values $hist]
+    set values [hist_to_values $lhist]
 
     # If averaging or single-frame, flatten inner list
     if { $dp_args(average)==1 || [llength $framelist]==1 } {
@@ -103,11 +103,10 @@ proc ::density_profile::density_profile {args} {
 # Convert histogram into list of breaks => {-6, -4, -2, 0}
 proc ::density_profile::hist_to_xbreaks {lhist} {
     variable dp_args
-    array set hist [array get $lhist]
+    array set hist $lhist
     lassign [get_keys_range [array names hist]] fmin fmax binmin binmax
 
     set xbreaks {}
-    set nbins [expr $binmax-$binmin+1]
     for {set bin $binmin} {$bin<=$binmax} {incr bin} {
 	lappend xbreaks [expr $bin*$dp_args(resolution)]
     }
@@ -116,7 +115,8 @@ proc ::density_profile::hist_to_xbreaks {lhist} {
 
 # Convert histogram into list of frames => { 2,4 }
 proc ::density_profile::hist_to_frames {lhist} {
-    set kk [array names [array get $lhist]]
+    array set hist $lhist
+    set kk [array names hist]
     foreach k $kk {
 	lappend flist [lindex [split $k ,] 0]
 	lappend xlist [lindex [split $k ,] 1]
@@ -129,11 +129,13 @@ proc ::density_profile::hist_to_frames {lhist} {
 # Values, return { {0.23 0} {0 0.42} {0.21 0} {0 0.40} }
 proc ::density_profile::hist_to_values {lhist} {
     variable dp_args
-    array set hist [array get $lhist]
+    array set hist $lhist
     lassign [get_keys_range [array names hist]] fmin fmax binmin binmax
 
     # Outer cycle is on bins
     set v {}
+    set nbins [expr $binmax-$binmin+1]
+
     for {set idx 0} {$idx<$nbins} {incr idx} {
 	set bin [expr $idx+$binmin]
 	set tmp {}
@@ -167,9 +169,15 @@ proc ::density_profile::average_sublists {vl} {
 #  xmin = $bin * $resolution
 #
 #  hist(frame,bin)
+#
+# The hist structure is contrieved because we don't know the bins
+# until all of the frames have been scanned
 
 proc ::density_profile::compute { } {
     variable dp_args
+
+    set resolution $dp_args(resolution)
+    set axis $dp_args(axis)
 
     # Check if PBC box is set
     set area [transverse_area]
@@ -282,8 +290,8 @@ proc ::density_profile::fix_frame_range {} {
     set s $dp_args(frame_step)
 
     # Should be the atom selection frame?
-    if { $f==now } { set f [molinfo top get frame] }
-    if { $t==now } { set t [molinfo top get frame] }
+    if { $f=="now" } { set f [molinfo top get frame] }
+    if { $t=="now" } { set t [molinfo top get frame] }
 
     return [list $f $t $s]
 }
