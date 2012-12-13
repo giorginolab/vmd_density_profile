@@ -85,8 +85,10 @@ proc ::density_profile::density_profile {args} {
 
     parray dp_args
 
-    # Reformat the histogram and return it
+    # Compute the bare histogram
     set lhist [compute]
+
+    # Reformat the histogram and return it
     set xbreaks [hist_to_xbreaks $lhist]
     set framelist [hist_to_frames $lhist]
     set values [hist_to_values $lhist]
@@ -167,8 +169,12 @@ proc ::density_profile::average_sublists {vl} {
 
 
 
-# Compute and return the bare histogram. Relation between bins and coordinate is implicit;
-#  - note that [0..$resolution) goes in bin 0, and so on.
+# Compute and return the bare histogram. Relation between bins and
+# coordinate is implicit; note that [0..$resolution) goes in bin 0,
+# and so on. 
+#
+# This is the workhorse function, assumes namespace variables are
+# properly set.
 #
 #  bin = [expr int(floor($x/$resolution))] 
 #  xmin = $bin * $resolution
