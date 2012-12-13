@@ -1,3 +1,9 @@
+
+export TCLLIBPATH=$PWD
+
+
+
+
 structure of a split plugin
 
 package provide chirality_gui 1.1
