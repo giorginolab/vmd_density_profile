@@ -2,30 +2,31 @@
 
 
 
-package provide density_profile 0.3
+package provide density_profile 1.0
 
 # Declare the namespace for this dialog
 namespace eval ::density_profile:: {
     # Variables matching command line options
     variable dp_args
-    array set dp_args {
-	target          atoms
+    variable dp_args_defaults {
+	rho             atoms
 	selection       all
 	axis            z
 	resolution      1
-	ansource        type
+	Zsource         type
 	partial_charges 1
 	frame_from      now
 	frame_to        now
 	frame_step      1
 	average		0
     }
+    array set dp_args $dp_args_defaults
 
     # Atom numbers - only the first letter counts
     variable name_to_Z {H 1  C 6  N 7  O 8  F 9  P 15  S 16}
 
     # List of args in "preferred" order
-    variable dp_args_list {target selection axis resolution ansource partial_charges \
+    variable dp_args_list {rho selection axis resolution Zsource partial_charges \
 			       frame_from frame_to frame_step average}
 
 }
@@ -42,20 +43,24 @@ proc ::density_profile::density_profile_usage { } {
     puts "VMD Density Profile tool.  Computes 1-D projections of various atomic densities."
     puts "The computation is performed in a single frame, a trajectory, or averaged"
     puts "over multiple frames. You probably want to wrap your trajectory."
-    puts "See http://multiscalelab.org/utilities/DensityProfileTool"
     puts " "
     puts "Usage: density_profile <args>"
     puts "Args (with defaults):"
     foreach k $dp_args_list {
 	puts "   -$k $dp_args($k)"
     }
+    puts " "
+    puts "Density  -rho  is one of  {atoms|mass|charge|electrons}"
+    puts "See documentation at http://multiscalelab.org/utilities/DensityProfileTool"
 }
 
 
 # Command line parsing (sets namespace variables). TODO: allow short
 # substrings, e.g. -sel
-proc ::density_profile::density_profile_parse {args} {
+proc ::density_profile::parse_args {args} {
     variable dp_args
+    variable dp_args_defaults
+    array set dp_args $dp_args_defaults
     foreach {a v} $args {
 	if {![regexp {^-} $a]} {
 	    error "Argument should start with -: $a"
@@ -76,7 +81,7 @@ proc ::density_profile::density_profile {args} {
 	density_profile_usage
 	return
     } 
-    eval density_profile_parse $args
+    eval parse_args $args
 
     parray dp_args
 
@@ -182,10 +187,10 @@ proc ::density_profile::compute { } {
     # Check if PBC box is set
     set area [transverse_area]
     if { $area == -1 } { 	
-	puts "Warning: No periodic cell information. Will compute linear densities instead of volume densities."
+	puts "Warning: No periodic cell information. Computing linear densities instead of volume densities."
 	set area 1
-    } elseif { $area == -2 } {
-	error "Only orthorombic cells are supported"
+    } elseif { $area <= -2 } {
+	error "Cannot compute density, check arguments."
     }
     
     # Values
@@ -221,22 +226,31 @@ proc ::density_profile::compute { } {
 
 
 
-# Sanity check on PBC. Return -1 if error occurred but densities can
-# be still computed, -2 if not, else return transversal PBC area 
+# Sanity check on PBC. Return values
+#   -1 if LINEAR densities can be still computed,
+#   -2 if non-orthorhombic
+#   -3 if wrong axis
+#  else return transversal PBC area 
 proc ::density_profile::transverse_area { } {
     variable dp_args
+    set axis $dp_args(axis)
     lassign [molinfo top get {a b c alpha beta gamma}] a b c alpha beta gamma
 
     # heuristic for unset box
     if {$a<2 || $b<2 || $c<2} {	
 	return -1
     } elseif {$alpha!= 90 || $beta!=90 || $gamma!=90} {
+	puts "Only orthorombic cells are supported"
 	return -2
     } else {
-	switch -- $dp_args(axis) {
+	switch -- $axis {
 	    x { set area [expr $b*$c] }
 	    y { set area [expr $a*$c] }
 	    z { set area [expr $a*$b] }
+	    default {
+		puts "Wrong axis $axis, must be one of x,y or z"
+		set area -3
+	    }
 	}
 	return $area
     }
@@ -269,7 +283,7 @@ proc ::density_profile::get_keys_range {kk} {
 proc ::density_profile::fill_keys arr {
     upvar $arr inp
     lassign [get_keys_range [array names inp]] fmin fmax xmin xmax
-    puts "Filling frames $fmin..$fmax, bins $xmin..$xmax"
+#    puts "Filling frames $fmin..$fmax, bins $xmin..$xmax"
 
     for {set f $fmin} {$f<=$fmax} {incr f} {
 	for {set x $xmin} {$x<=$xmax} {incr x} {
@@ -303,7 +317,7 @@ proc ::density_profile::fix_frame_range {} {
 proc ::density_profile::get_values {} {
     variable dp_args
     set as [atomselect top $dp_args(selection)]
-    switch $dp_args(target) {
+    switch $dp_args(rho) {
 	atoms { 
 	    set tval [lrepeat [$as num] 1] 
 	}
@@ -320,6 +334,10 @@ proc ::density_profile::get_values {} {
 		set tval [vecadd $tval $pch]
 	    }
 	}
+	default {
+	    $as delete
+	    error "Unknown rho, must be one of {atoms|mass|charge|electrons}"
+	}
     }
     $as delete
     return $tval
@@ -327,12 +345,12 @@ proc ::density_profile::get_values {} {
 
 
 # Similar to [atomselect get ...] , but get Z number, based on the
-# $ansource attribute and name_to_Z table.
+# $Zsource attribute and name_to_Z table.
 proc ::density_profile::getZ {as} {
     variable dp_args
     variable name_to_Z
 
-    set nlist [$as get $dp_args(ansource)]
+    set nlist [$as get $dp_args(Zsource)]
     set res {}
     set unk {}
     set warns 0
@@ -352,7 +370,7 @@ proc ::density_profile::getZ {as} {
 	lappend res $zn
     }
     if {[llength $unk]>0} {
-	error "Atomic numbers for the following $ansource keywords could not be inferred: $unk." 
+	error "Atomic numbers for the following \"$Zsource\" atom attributes could not be inferred: $unk." 
     }
     return $res
 }
