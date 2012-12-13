@@ -22,7 +22,8 @@ source [file join $density_profile_gui::SCRIPTDIR density_profile_gui_ui.tcl]
 # BEGIN USER CODE
 package provide density_profile_gui 0.3
 
-# VMD-specific stuff
+# VMD-specific stuff. If invoked from VMD, load the backed functions
+# (in package density_profile) and setup some defaults.
 set density_profile_gui::in_vmd [string length [info proc vmd_install_extension]]
 if { $density_profile_gui::in_vmd } {
     vmd_install_extension density_profile density_profile_gui::density_profile_tk "Analysis/Density Profile Tool"
@@ -148,41 +149,6 @@ proc density_profile_gui::do_plot_all arr {
     }
 
 }
-
-
-
-
-# proc density_profile_gui::plot_all arr {
-#     variable resolution
-#     variable area
-#     upvar $arr inp
-
-#     # bin centers and list
-#     set bclist {}
-#     set denslist {}
-#     foreach bin [lsort -integer [array names hist]] {
-# 	set bc [expr ($bin+.5)*$resolution]
-# 	lappend bclist $bc
-# 	lappend denslist $hist($bin)
-#     }
-
-
-#     # plot
-#     multiplot -x $bclist -y $denslist  -ylabel $ylabel -plot \
-# 	-marker point -radius 2  -fillcolor "#ff0000" -color "#ff0000"
-
-#     # save to file
-#     set df "/tmp/densityprofile.[pid].dat"
-#     puts "Please find data file at $df"
-#     set of [open $df w]
-#     puts $of "# FRAME bincenter value"
-#     foreach x $bclist v $denslist { puts $of "$x $v" }
-#     close $of
-
-#     # Bye
-#     puts "To convert into mol/dm\ub3, multiply by 1660.30 \uc5\ub3 mol/dm\ub3"
-
-# }
 # END USER CODE
 
 # BEGIN CALLBACK CODE
@@ -447,7 +413,9 @@ proc density_profile_gui::_radiobutton_11_command args {}
 # ARGS:
 #    <NONE>
 #
-proc density_profile_gui::close_command args {}
+proc density_profile_gui::close_command args {
+    wm withdraw .density_profile
+}
 
 # density_profile_gui::plot_command --
 #
@@ -467,7 +435,9 @@ proc density_profile_gui::plot_command args {
 # ARGS:
 #    <NONE>
 #
-proc density_profile_gui::help_command args {}
+proc density_profile_gui::help_command args {
+    vmd_open_url http://multiscalelab.org/utilities/DensityProfileTool
+}
 
 # END CALLBACK CODE
 

@@ -6,40 +6,80 @@ package provide density_profile 0.3
 
 # Declare the namespace for this dialog
 namespace eval ::density_profile:: {
-
-
     # Variables matching command line options
-    variable target atoms
-    variable selection all
-    variable axis z
-    variable resolution 1
-    variable ansource type
-    variable partial_charges 1
-    variable frame_from now
-    variable frame_to now
-    variable frame_step 1
-    variable average 0
+    variable dp_args
+    array set dp_args {
+	target          atoms
+	selection       all
+	axis            z
+	resolution      1
+	ansource        type
+	partial_charges 1
+	frame_from      now
+	frame_to        now
+	frame_step      1
+	average		0
+    }
 
     # Atom numbers
     variable name_to_Z {H 1  C 6  N 7  O 8  F 9  P 15  S 16}
 
-    variable args_list {target selection axis resolution ansource partial_charges \
-			    frame_from frame_to frame_step average}
+    # List of args in "preferred" order
+    variable dp_args_list {target selection axis resolution ansource partial_charges \
+			       frame_from frame_to frame_step average}
+
 }
 
 
-
+# User-accessible proc
 proc density_profile { args } { return [eval ::density_profile::density_profile $args] }
 
 
+# Help
 proc ::density_profile::density_profile_usage { } {
-    variable args_list
+    variable dp_args
+    variable dp_args_list
+    puts "VMD Density Profile tool.  Computes 1-D projections of various atomic densities. "
+    puts "The computation is performed in a single frame, a trajectory, or averaged over multiple frames."
+    puts "See http://multiscalelab.org/utilities/DensityProfileTool"
+    puts " "
     puts "Usage: density_profile <args>"
     puts "Args (with defaults):"
-    foreach a $args_list {
-	puts "   -$a [set ${a}]"
+    foreach k $dp_args_list {
+	puts "   -$k $dp_args($k)"
     }
 }
+
+
+# Command line parsing (sets namespace variables)
+proc ::density_profile::density_profile_parse {args} {
+    variable dp_args
+    foreach {a v} $args {
+	if {![regexp {^-} $a]} {
+	    error "Argument should start with -: $a"
+	} 
+	set a [string trimleft $a -]
+	if {![info exists dp_args($a)]} {
+	    error "Unknown argument: $a"
+	} 
+	set dp_args($a) $v
+    }
+}
+
+
+# Main entry point
+proc ::density_profile::density_profile {args} {
+    if {[llength $args]==0} {
+	density_profile_usage
+	return
+    }
+
+    variable dp_args
+    eval density_profile_parse $args
+
+    parray dp_args
+}
+
 
 
 
