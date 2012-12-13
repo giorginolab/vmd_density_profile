@@ -48,6 +48,12 @@ proc density_profile_gui::density_profile_tk {} {
 
 
 
+# Return the title to show on the vertical axis
+proc density_profile_gui::get_title {} {
+    set rho ::density_profile::dp_args(rho)
+    return [string totitle $rho]
+}
+
 # Return the unit to show on the vertical axis
 proc density_profile_gui::get_ylabel {} {
     set rho ::density_profile::dp_args(rho)
@@ -78,25 +84,27 @@ proc density_profile_gui::do_plot {} {
     }
 
     
-    array set hist [density_profile::compute]
+    set lhist [density_profile::compute]
 
-    lassign [density_profile::get_keys_range [array names hist]] fmin fmax xmin xmax
+    # lassign [density_profile::get_keys_range [array names hist]] fmin fmax xmin xmax
+    # set nframes [expr $fmax-$fmin+1]
+    # set nbins [expr $xmax-$xmin+1]
 
-    puts "Plot range $fmin..$fmax, bins $xmin..$xmax"
+    set framelist [hist_to_frames $lhist]
+    set values [hist_to_values $lhist]
 
-    set nframes [expr $fmax-$fmin+1]
-    set nbins [expr $xmax-$xmin+1]
 
-    # Y axis label
+
+    # Title and Y axis label
+    set title [get_title]
     set ylabel [get_ylabel]
     if {$area == 1} { set ylabel "$ylabel/\uc5" } \
 	else { set ylabel "$ylabel/\uc5\ub3" }
 
-
     # bin centers
-    set bclist {}
-    for {set x $xmin} {$x<=$xmax} {incr x} {
-	lappend bclist [expr ($x+.5)*$resolution]
+    set xbreaks [hist_to_xbreaks $lhist]
+    foreach b $xbreaks {
+	lappend bclist [expr $b+0.5*$resolution]
     }
     
     # do plot FIXME BROKEN IF FRAME STEP > 1!!!
