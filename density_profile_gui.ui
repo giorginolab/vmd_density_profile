@@ -1,15 +1,15 @@
 # GUIBUILDER FILE Build 146
-# Created: 2012-12-13 15:09:16 by GUI Builder Build 146
+# Created: 2012-12-13 15:23:05 by GUI Builder Build 146
 language tcl 8.4
 widget {Tk frame} f {
 	geometry min_column {40 119}
-	geometry min_row {17 44 2 2 2 2 4 40 27}
+	geometry min_row {17 44 2 2 2 2 4 2 27}
 	geometry pad_column {0 0}
 	geometry pad_row {0 0 0 0 0 0 0 0 0}
 	geometry resize_column {0 3}
-	geometry resize_row {1 1 0 1 0 0 0 3 1}
+	geometry resize_row {1 3 0 1 0 0 0 1 1}
 	geometry weight_column {0 1}
-	geometry weight_row {0 0 0 0 0 0 0 1 0}
+	geometry weight_row {0 1 0 0 0 0 0 0 0}
 	data GROUP Tk
 	data ID {}
 	data MASTER {}
@@ -82,13 +82,13 @@ widget {Tk frame} _frame_4 {
 	geometry -row 9
 	geometry -rowspan 1
 	geometry -sticky news
-	geometry min_column {40 40}
+	geometry min_column {40 40 40}
 	geometry min_row 10
-	geometry pad_column {0 0}
+	geometry pad_column {0 0 0}
 	geometry pad_row 0
-	geometry resize_column {3 3}
+	geometry resize_column {0 3 3}
 	geometry resize_row 1
-	geometry weight_column {1 1}
+	geometry weight_column {0 1 1}
 	geometry weight_row 0
 	data GROUP Tk
 	data ID _frame_4
@@ -101,14 +101,14 @@ widget {Tk frame} _frame_5 {
 	geometry -columnspan 1
 	geometry -row 7
 	geometry -rowspan 1
-	geometry -sticky w
+	geometry -sticky ew
 	geometry min_column {40 24 40 27 40 78}
 	geometry min_row 2
 	geometry pad_column {0 0 0 0 0 0}
 	geometry pad_row 0
-	geometry resize_column {0 0 0 0 0 1}
+	geometry resize_column {3 0 3 0 3 1}
 	geometry resize_row 0
-	geometry weight_column {0 0 0 0 0 0}
+	geometry weight_column {1 0 1 0 1 0}
 	geometry weight_row 0
 	data GROUP Tk
 	data ID _frame_5
@@ -496,7 +496,7 @@ widget {Tk radiobutton} _radiobutton_11 {
 }
 widget {Tk button} _button_1 {
 	configure -text Plot
-	geometry -column 1
+	geometry -column 2
 	geometry -columnspan 1
 	geometry -row 1
 	geometry -rowspan 1
@@ -516,7 +516,7 @@ widget {Tk button} _button_1 {
 }
 widget {Tk button} _button_2 {
 	configure -text Close
-	geometry -column 2
+	geometry -column 3
 	geometry -columnspan 1
 	geometry -row 1
 	geometry -rowspan 1
@@ -581,12 +581,14 @@ widget {Tk checkbutton} _checkbutton_1 {
 }
 widget {Tk label} _label_4 {
 	configure -font {helvetica 10}
-	configure -text {\ua9 2012 Toni Giorgino}
+	configure -pady 6
+	configure -text {Computes 1-D projections of various atomic densities. The computation is performed in a single frame, a trajectory, or averaged over multiple frames.\nToni Giorgino (ISIB-CNR)}
+	configure -wraplength 400
 	geometry -column 1
 	geometry -columnspan 2
 	geometry -row 2
 	geometry -rowspan 1
-	geometry -sticky n
+	geometry -sticky nsew
 	geometry min_column {40 40 40 40 40}
 	geometry min_row 40
 	geometry pad_column {0 0 0 0 0}
@@ -774,6 +776,7 @@ widget {Tk entry} _entry_5 {
 }
 widget {Tk label} _label_12 {
 	configure -font {helvetica 10}
+	configure -pady 6
 	configure -text {See console for information and data files}
 	geometry -column 1
 	geometry -columnspan 2
@@ -792,5 +795,17 @@ widget {Tk label} _label_12 {
 	data ID _label_12
 	data MASTER {}
 	data TYPE {Tk label}
+}
+widget {Tk button} _button_3 {
+	configure -text ?
+	geometry -column 1
+	geometry -columnspan 1
+	geometry -row 1
+	geometry -rowspan 1
+	geometry -sticky {}
+	data GROUP Tk
+	data ID _button_3
+	data MASTER _frame_4
+	data TYPE {Tk button}
 }
 
