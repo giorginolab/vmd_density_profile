@@ -50,7 +50,7 @@ proc density_profile_gui::density_profile_tk {} {
 
 # Return the unit to show on the vertical axis
 proc density_profile_gui::get_ylabel {} {
-    variable rho
+    set rho ::density_profile::dp_args(rho)
     array set ylabel {atoms atoms   mass uma  charge e  electrons el}
     return $ylabel($rho)
 }
@@ -58,10 +58,11 @@ proc density_profile_gui::get_ylabel {} {
 
 # Ugly mixture of computation and display REFACTOR
 proc density_profile_gui::do_plot {} {
-    variable selection
-    variable axis
-    variable resolution
-    variable area
+    variable ::density_profile::dp_args
+    set selection  $dp_args(selection)
+    set axis       $dp_args(axis)
+    set resolution $dp_args(resolution)
+    set frame_average $dp_args(average)
 
     # Make sure pbcs are set or warn
     set area [density_profile::transverse_area]
@@ -79,22 +80,8 @@ proc density_profile_gui::do_plot {} {
     
     array set hist [density_profile::compute]
 
-    # Now behavior depends whether averaging or not
-    do_plot_all [array get hist]
-}
+    lassign [density_profile::get_keys_range [array names hist]] fmin fmax xmin xmax
 
-
-
-
-# fill histogram keys so that there is one integer bin per each value
-# between mi and max REFACTOR
-proc density_profile_gui::do_plot_all arr {
-    variable resolution
-    variable frame_average
-    variable area
-    array set inp $arr
-
-    lassign [density_profile::get_keys_range [array names inp]] fmin fmax xmin xmax
     puts "Plot range $fmin..$fmax, bins $xmin..$xmax"
 
     set nframes [expr $fmax-$fmin+1]
@@ -431,14 +418,6 @@ proc density_profile_gui::plot_command args {
     do_plot
 }
 
-# density_profile_gui::_button_3_command --
-#
-# Legacy command found in callback code. Add user comments inside body.
-#
-# ARGS:
-#    <NONE>
-#
-proc density_profile_gui::_button_3_command args {}
 
 # END CALLBACK CODE
 
