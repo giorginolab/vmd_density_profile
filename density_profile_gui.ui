@@ -1,5 +1,5 @@
 # GUIBUILDER FILE Build 146
-# Created: 2012-12-13 18:23:16 by GUI Builder Build 146
+# Created: 2012-12-13 19:07:51 by GUI Builder Build 146
 language tcl 8.4
 widget {Tk frame} f {
 	geometry min_column {40 119}
@@ -204,7 +204,7 @@ from this atom attribute}
 }
 widget {Tk entry} _entry_1 {
 	configure -font {helvetica 10}
-	configure -textvariable density_profile_gui::selection
+	configure -textvariable density_profile::dp_args(selection)
 	geometry -column 2
 	geometry -columnspan 1
 	geometry -row 4
@@ -248,7 +248,7 @@ widget {Tk radiobutton} _radiobutton_2 {
 	configure -font {helvetica 10}
 	configure -text x
 	configure -value x
-	configure -variable density_profile_gui::axis
+	configure -variable density_profile::dp_args(axis)
 	geometry -column 1
 	geometry -columnspan 1
 	geometry -row 1
@@ -271,7 +271,7 @@ widget {Tk radiobutton} _radiobutton_3 {
 	configure -font {helvetica 10}
 	configure -text y
 	configure -value y
-	configure -variable density_profile_gui::axis
+	configure -variable density_profile::dp_args(axis)
 	geometry -column 2
 	geometry -columnspan 1
 	geometry -row 1
@@ -294,7 +294,7 @@ widget {Tk radiobutton} _radiobutton_4 {
 	configure -font {helvetica 10}
 	configure -text z
 	configure -value z
-	configure -variable density_profile_gui::axis
+	configure -variable density_profile::dp_args(axis)
 	geometry -column 3
 	geometry -columnspan 1
 	geometry -row 1
@@ -315,7 +315,7 @@ widget {Tk radiobutton} _radiobutton_4 {
 }
 widget {Tk entry} _entry_2 {
 	configure -justify center
-	configure -textvariable density_profile_gui::resolution
+	configure -textvariable density_profile::dp_args(resolution)
 	configure -width 8
 	geometry -column 5
 	geometry -columnspan 1
@@ -339,7 +339,7 @@ widget {Tk radiobutton} _radiobutton_5 {
 	configure -font {helvetica 10}
 	configure -text name
 	configure -value name
-	configure -variable density_profile_gui::ansource
+	configure -variable density_profile::dp_args(Zsource)
 	geometry -column 1
 	geometry -columnspan 1
 	geometry -row 1
@@ -362,7 +362,7 @@ widget {Tk radiobutton} _radiobutton_6 {
 	configure -font {helvetica 10}
 	configure -text type
 	configure -value type
-	configure -variable density_profile_gui::ansource
+	configure -variable density_profile::dp_args(Zsource)
 	geometry -column 2
 	geometry -columnspan 1
 	geometry -row 1
@@ -385,7 +385,7 @@ widget {Tk radiobutton} _radiobutton_7 {
 	configure -font {helvetica 10}
 	configure -text element
 	configure -value element
-	configure -variable density_profile_gui::ansource
+	configure -variable density_profile::dp_args(Zsource)
 	geometry -column 3
 	geometry -columnspan 1
 	geometry -row 1
@@ -429,7 +429,7 @@ widget {Tk radiobutton} _radiobutton_9 {
 	configure -font {helvetica 10}
 	configure -text mass
 	configure -value mass
-	configure -variable density_profile_gui::target
+	configure -variable density_profile::dp_args(rho)
 	geometry -column 2
 	geometry -columnspan 1
 	geometry -row 1
@@ -452,7 +452,7 @@ widget {Tk radiobutton} _radiobutton_10 {
 	configure -font {helvetica 10}
 	configure -text charge
 	configure -value charge
-	configure -variable density_profile_gui::target
+	configure -variable density_profile::dp_args(rho)
 	geometry -column 3
 	geometry -columnspan 1
 	geometry -row 1
@@ -475,7 +475,7 @@ widget {Tk radiobutton} _radiobutton_11 {
 	configure -font {helvetica 10}
 	configure -text electrons
 	configure -value electrons
-	configure -variable density_profile_gui::target
+	configure -variable density_profile::dp_args(rho)
 	geometry -column 4
 	geometry -columnspan 1
 	geometry -row 1
@@ -538,7 +538,7 @@ widget {Tk radiobutton} _radiobutton_1 {
 	configure -font {helvetica 10}
 	configure -text atoms
 	configure -value atoms
-	configure -variable density_profile_gui::target
+	configure -variable density_profile::dp_args(rho)
 	geometry -column 1
 	geometry -columnspan 1
 	geometry -row 1
@@ -560,7 +560,7 @@ widget {Tk radiobutton} _radiobutton_1 {
 widget {Tk checkbutton} _checkbutton_1 {
 	configure -font {helvetica 10}
 	configure -text {Consider partial charges}
-	configure -variable density_profile_gui::partial_charges
+	configure -variable density_profile::dp_args(partial_charges)
 	geometry -column 4
 	geometry -columnspan 1
 	geometry -row 1
@@ -646,7 +646,7 @@ widget {Tk label} _label_9 {
 }
 widget {Tk entry} _entry_3 {
 	configure -justify center
-	configure -textvariable density_profile_gui::frame_from
+	configure -textvariable density_profile::dp_args(frame_from)
 	configure -width 8
 	geometry -column 1
 	geometry -columnspan 1
@@ -690,7 +690,7 @@ widget {Tk label} _label_10 {
 widget {Tk checkbutton} _checkbutton_2 {
 	configure -font {helvetica 10}
 	configure -text Average
-	configure -variable density_profile_gui::frame_average
+	configure -variable density_profile::dp_args(frame_average)
 	geometry -column 6
 	geometry -columnspan 1
 	geometry -row 1
@@ -711,7 +711,7 @@ widget {Tk checkbutton} _checkbutton_2 {
 }
 widget {Tk entry} _entry_4 {
 	configure -justify center
-	configure -textvariable density_profile_gui::frame_to
+	configure -textvariable density_profile::dp_args(frame_to)
 	configure -width 8
 	geometry -column 3
 	geometry -columnspan 1
@@ -754,7 +754,7 @@ widget {Tk label} _label_11 {
 }
 widget {Tk entry} _entry_5 {
 	configure -justify center
-	configure -textvariable density_profile_gui::frame_step
+	configure -textvariable density_profile::dp_args(frame_step)
 	configure -width 8
 	geometry -column 5
 	geometry -columnspan 1
@@ -812,7 +812,7 @@ widget {Tk button} _button_3 {
 	geometry weight_column {0 0 0 0 0}
 	geometry weight_row 0
 	data GROUP Tk
-	data ID _button_3
+	data ID help
 	data MASTER _frame_4
 	data TYPE {Tk button}
 }
