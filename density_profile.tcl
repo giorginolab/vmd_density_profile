@@ -59,8 +59,6 @@ proc ::density_profile::density_profile_usage { } {
 # substrings, e.g. -sel
 proc ::density_profile::parse_args {args} {
     variable dp_args
-    variable dp_args_defaults
-    array set dp_args $dp_args_defaults
     foreach {a v} $args {
 	if {![regexp {^-} $a]} {
 	    error "Argument should start with -: $a"
@@ -77,6 +75,8 @@ proc ::density_profile::parse_args {args} {
 # Main entry point. 
 proc ::density_profile::density_profile {args} {
     variable dp_args
+    variable dp_args_defaults
+    array set dp_args $dp_args_defaults
     if {[llength $args]==0} {
 	density_profile_usage
 	return
