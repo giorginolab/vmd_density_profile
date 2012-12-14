@@ -9,4 +9,4 @@
 # full path name of this file's directory.
 
 package ifneeded density_profile 1.0 [list source [file join $dir density_profile.tcl]]
-package ifneeded density_profile_gui 0.3 [list source [file join $dir density_profile_gui.tcl]]
+package ifneeded density_profile_gui 1.0 [list source [file join $dir density_profile_gui.tcl]]

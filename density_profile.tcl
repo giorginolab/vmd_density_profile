@@ -1,7 +1,5 @@
 # Core functions for computing density profiles.
 
-
-
 package provide density_profile 1.0
 
 # Declare the namespace for this dialog

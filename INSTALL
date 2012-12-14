@@ -1,0 +1,7 @@
+Installation requires two steps:
+
+1. Identify your VMD installation directory (say, $VMDDIR)
+2. Copy (or symlink) the script directory in $VMDDIR/plugins/noarch/tcl
+3. Move the file PLUGIN_NAME_init.tcl in $VMDDIR/scripts/init.d 
+   (create said directory if it does not exist)
+
