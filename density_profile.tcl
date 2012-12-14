@@ -90,7 +90,7 @@ proc ::density_profile::density_profile {args} {
 
     # Reformat the histogram and return it
     set xbreaks [hist_to_xbreaks $lhist]
-    set framelist [hist_to_frames $lhist]
+    set framelist [get_framelist]
     set values [hist_to_values $lhist]
 
     # If averaging or single-frame, flatten inner list
@@ -111,7 +111,7 @@ proc ::density_profile::density_profile {args} {
 proc ::density_profile::hist_to_xbreaks {lhist} {
     variable dp_args
     array set hist $lhist
-    lassign [get_keys_range [array names hist]] fmin fmax binmin binmax
+    lassign [get_x_range [array names hist]]  binmin binmax
 
     set xbreaks {}
     for {set bin $binmin} {$bin<=$binmax} {incr bin} {
@@ -120,24 +120,13 @@ proc ::density_profile::hist_to_xbreaks {lhist} {
     return $xbreaks
 }
 
-# Convert histogram into list of frames => { 2,4 }
-proc ::density_profile::hist_to_frames {lhist} {
-    array set hist $lhist
-    set kk [array names hist]
-    foreach k $kk {
-	lappend flist [lindex [split $k ,] 0]
-	lappend xlist [lindex [split $k ,] 1]
-    }
-    set flist [lsort -uniq -integer $flist]
-    return $flist
-}
-
 
 # Values, return { {0.23 0} {0 0.42} {0.21 0} {0 0.40} }
 proc ::density_profile::hist_to_values {lhist} {
     variable dp_args
     array set hist $lhist
-    lassign [get_keys_range [array names hist]] fmin fmax binmin binmax
+    lassign [get_x_range [array names hist]]  binmin binmax
+    set framelist [get_framelist]
 
     # Outer cycle is on bins
     set v {}
@@ -147,7 +136,7 @@ proc ::density_profile::hist_to_values {lhist} {
 	set bin [expr $idx+$binmin]
 	set tmp {}
 	# Inner cycle on frames
-	for {set f $fmin} {$f<=$fmax} {incr f} {
+	foreach f $framelist {
 	    lappend tmp $hist($f,$bin)
 	}
 	lappend v $tmp
@@ -162,6 +151,17 @@ proc ::density_profile::average_sublists {vl} {
     set res {}
     foreach l $vl {
 	lappend res [vecmean $l]
+    }
+    return $res
+}
+
+
+
+# Similar to average_sublists, but returns standard deviation of each bin.
+proc ::density_profile::stddev_sublists {vl} {
+    set res {}
+    foreach l $vl {
+	lappend res [vecstddev $l]
     }
     return $res
 }
@@ -204,12 +204,12 @@ proc ::density_profile::compute { } {
     set tval [vecscale [expr 1./$area/$resolution] $tval]
 
     # Frame range
-    lassign [fix_frame_range] ffrom fto fstep
+    set framelist [get_framelist]
 
     # Start loop over frames
     set as [atomselect top $dp_args(selection)]
     array unset hist
-    for {set f $ffrom} {$f<=$fto} {incr f $fstep} {
+    foreach f $framelist {
 	$as frame $f
 	set xval [$as get $axis]
 
@@ -263,23 +263,18 @@ proc ::density_profile::transverse_area { } {
 }
 
 
+
+
 # return the range over the 1st and 2nd dimension of a pseudo-2d array
-# e.g. {2,3 5,4 2,4} -> {2 5 3 4}
-# 
-proc ::density_profile::get_keys_range {kk} {    
+# e.g. {2,3 5,4 2,4} -> {3 4}
+proc ::density_profile::get_x_range {kk} {    
     foreach k $kk {
-	lappend flist [lindex [split $k ,] 0]
 	lappend xlist [lindex [split $k ,] 1]
     }
-    set flist [lsort -uniq -integer $flist]
     set xlist [lsort -uniq -integer $xlist]
-
-    set fmin [lindex $flist 0]
-    set fmax [lindex $flist end]
     set xmin [lindex $xlist 0]
     set xmax [lindex $xlist end]
-    
-    return [list $fmin $fmax $xmin $xmax]
+    return [list $xmin $xmax]
 }
 
 
@@ -288,10 +283,12 @@ proc ::density_profile::get_keys_range {kk} {
 # 
 proc ::density_profile::fill_keys arr {
     upvar $arr inp
-    lassign [get_keys_range [array names inp]] fmin fmax xmin xmax
-#    puts "Filling frames $fmin..$fmax, bins $xmin..$xmax"
+    set keys [array names inp]
+    lassign [get_x_range $keys]  xmin xmax
+    set framelist [get_framelist]
+    # puts "Filling frames $framelist, bins $xmin..$xmax"
 
-    for {set f $fmin} {$f<=$fmax} {incr f} {
+    foreach f $framelist {
 	for {set x $xmin} {$x<=$xmax} {incr x} {
 	    if { ![info exists inp($f,$x)] } {
 		set inp($f,$x) 0
@@ -303,7 +300,7 @@ proc ::density_profile::fill_keys arr {
 
 # Auxiliary function, returns {from to step}, after possibly fixing
 # "now"
-proc ::density_profile::fix_frame_range {} {
+proc ::density_profile::get_framelist {} {
     variable dp_args
     set f $dp_args(frame_from)
     set t $dp_args(frame_to)
@@ -313,7 +310,10 @@ proc ::density_profile::fix_frame_range {} {
     if { $f=="now" } { set f [molinfo top get frame] }
     if { $t=="now" } { set t [molinfo top get frame] }
 
-    return [list $f $t $s]
+    for {set i $f} {$i<=$t} {incr i $s} {
+	lappend fl $i
+    }
+    return $fl
 }
 
 
