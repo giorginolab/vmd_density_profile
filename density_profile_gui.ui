@@ -1,5 +1,5 @@
 # GUIBUILDER FILE Build 146
-# Created: 2012-12-14 13:31:34 by GUI Builder Build 146
+# Created: 2012-12-14 14:18:37 by GUI Builder Build 146
 language tcl 8.4
 widget {Tk frame} f {
 	geometry min_column {40 119}
@@ -51,7 +51,7 @@ widget {Tk frame} _frame_2 {
 	geometry weight_column {0 0 0 0}
 	geometry weight_row 0
 	data GROUP Tk
-	data ID _frame_2
+	data ID frame_Zsource
 	data MASTER {}
 	data TYPE {Tk frame}
 	data level 1
@@ -183,7 +183,7 @@ widget {Tk label} _label_5 {
 	configure -font {helvetica 10}
 	configure -justify right
 	configure -text {Infer atomic number Z
-from this atom attribute}
+from atom attribute}
 	geometry -column 1
 	geometry -columnspan 1
 	geometry -row 6
@@ -337,6 +337,7 @@ widget {Tk entry} _entry_2 {
 }
 widget {Tk radiobutton} _radiobutton_5 {
 	configure -font {helvetica 10}
+	configure -state disabled
 	configure -text name
 	configure -value name
 	configure -variable density_profile::dp_args(Zsource)
@@ -354,12 +355,13 @@ widget {Tk radiobutton} _radiobutton_5 {
 	geometry weight_column {0 0 0 0 0}
 	geometry weight_row 0
 	data GROUP Tk
-	data ID _radiobutton_5
+	data ID radiobutton_Zsource_name
 	data MASTER _frame_2
 	data TYPE {Tk radiobutton}
 }
 widget {Tk radiobutton} _radiobutton_6 {
 	configure -font {helvetica 10}
+	configure -state disabled
 	configure -text type
 	configure -value type
 	configure -variable density_profile::dp_args(Zsource)
@@ -377,12 +379,13 @@ widget {Tk radiobutton} _radiobutton_6 {
 	geometry weight_column {0 0 0 0 0}
 	geometry weight_row 0
 	data GROUP Tk
-	data ID _radiobutton_6
+	data ID radiobutton_Zsource_type
 	data MASTER _frame_2
 	data TYPE {Tk radiobutton}
 }
 widget {Tk radiobutton} _radiobutton_7 {
 	configure -font {helvetica 10}
+	configure -state disabled
 	configure -text element
 	configure -value element
 	configure -variable density_profile::dp_args(Zsource)
@@ -400,7 +403,7 @@ widget {Tk radiobutton} _radiobutton_7 {
 	geometry weight_column {0 0 0 0 0}
 	geometry weight_row 0
 	data GROUP Tk
-	data ID _radiobutton_7
+	data ID radiobutton_Zsource_element
 	data MASTER _frame_2
 	data TYPE {Tk radiobutton}
 }
@@ -444,7 +447,7 @@ widget {Tk radiobutton} _radiobutton_9 {
 	geometry weight_column {0 0 0 0 0}
 	geometry weight_row 0
 	data GROUP Tk
-	data ID _radiobutton_9
+	data ID radiobutton_mass
 	data MASTER _frame_3
 	data TYPE {Tk radiobutton}
 }
@@ -467,7 +470,7 @@ widget {Tk radiobutton} _radiobutton_10 {
 	geometry weight_column {0 0 0 0 0}
 	geometry weight_row 0
 	data GROUP Tk
-	data ID _radiobutton_10
+	data ID radiobutton_charge
 	data MASTER _frame_3
 	data TYPE {Tk radiobutton}
 }
@@ -490,11 +493,12 @@ widget {Tk radiobutton} _radiobutton_11 {
 	geometry weight_column {0 0 0 0 0}
 	geometry weight_row 0
 	data GROUP Tk
-	data ID _radiobutton_11
+	data ID radiobutton_electrons
 	data MASTER _frame_3
 	data TYPE {Tk radiobutton}
 }
 widget {Tk button} _button_1 {
+	configure -font {helvetica 10 bold}
 	configure -text Plot
 	geometry -column 2
 	geometry -columnspan 1
@@ -515,6 +519,7 @@ widget {Tk button} _button_1 {
 	data TYPE {Tk button}
 }
 widget {Tk button} _button_2 {
+	configure -font {helvetica 10 bold}
 	configure -text Close
 	geometry -column 3
 	geometry -columnspan 1
@@ -553,12 +558,13 @@ widget {Tk radiobutton} _radiobutton_1 {
 	geometry weight_column {0 0 0 0 0}
 	geometry weight_row 0
 	data GROUP Tk
-	data ID _radiobutton_1
+	data ID radiobutton_atoms
 	data MASTER _frame_3
 	data TYPE {Tk radiobutton}
 }
 widget {Tk checkbutton} _checkbutton_1 {
 	configure -font {helvetica 10}
+	configure -state disabled
 	configure -text {Consider partial charges}
 	configure -variable density_profile::dp_args(partial_charges)
 	geometry -column 4
@@ -575,7 +581,7 @@ widget {Tk checkbutton} _checkbutton_1 {
 	geometry weight_column {0 0 0 0 0}
 	geometry weight_row 0
 	data GROUP Tk
-	data ID _checkbutton_1
+	data ID checkbox_Zsource_partial
 	data MASTER _frame_2
 	data TYPE {Tk checkbutton}
 }
@@ -797,6 +803,7 @@ widget {Tk label} _label_12 {
 	data TYPE {Tk label}
 }
 widget {Tk button} _button_3 {
+	configure -font {helvetica 10 bold}
 	configure -text ?
 	geometry -column 1
 	geometry -columnspan 1

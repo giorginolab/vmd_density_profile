@@ -200,15 +200,15 @@ proc ::density_profile::compute { } {
     }
     
     # Values
-    set tval [get_values]
+    set tval [get_rho]
     set tval [vecscale [expr 1./$area/$resolution] $tval]
 
-    # Frame range
-    set framelist [get_framelist]
+    # Build atomselection
+    set as [atomselect top $dp_args(selection)]
 
     # Start loop over frames
-    set as [atomselect top $dp_args(selection)]
     array unset hist
+    set framelist [get_framelist]
     foreach f $framelist {
 	$as frame $f
 	set xval [$as get $axis]
@@ -320,7 +320,7 @@ proc ::density_profile::get_framelist {} {
 # Return the values of the selected property, as a list of one value
 # per selected atom. These will not change per-frame.
 # 
-proc ::density_profile::get_values {} {
+proc ::density_profile::get_rho {} {
     variable dp_args
     set as [atomselect top $dp_args(selection)]
     switch $dp_args(rho) {
