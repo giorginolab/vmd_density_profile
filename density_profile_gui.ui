@@ -1,5 +1,5 @@
 # GUIBUILDER FILE Build 146
-# Created: 2012-12-14 14:18:37 by GUI Builder Build 146
+# Created: 2012-12-15 18:55:38 by GUI Builder Build 146
 language tcl 8.4
 widget {Tk frame} f {
 	geometry min_column {40 119}
@@ -803,13 +803,14 @@ widget {Tk label} _label_12 {
 	data TYPE {Tk label}
 }
 widget {Tk button} _button_3 {
+	configure -bitmap questhead
 	configure -font {helvetica 10 bold}
 	configure -text ?
 	geometry -column 1
 	geometry -columnspan 1
 	geometry -row 1
 	geometry -rowspan 1
-	geometry -sticky {}
+	geometry -sticky nsew
 	geometry min_column {40 40 40 40 40}
 	geometry min_row 40
 	geometry pad_column {0 0 0 0 0}
