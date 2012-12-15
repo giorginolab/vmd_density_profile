@@ -31,7 +31,7 @@ package provide density_profile_gui 1.0
 # (in package density_profile) and setup some defaults.
 set density_profile_gui::in_vmd [string length [info proc vmd_install_extension]]
 if { $density_profile_gui::in_vmd } {
-    vmd_install_extension density_profile \
+    vmd_install_extension density_profile_gui \
 	density_profile_gui::density_profile_tk "Analysis/Density Profile Tool"
     package require density_profile
 } else {
