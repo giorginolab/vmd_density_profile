@@ -1,4 +1,11 @@
-# Core functions for computing density profiles.
+# Core functions for computing density profiles. The Density Profile
+# Tool is a VMD analysis plugin that computes 1-D projections of
+# various atomic densities. The computation is performed in a single
+# frame, a trajectory, or averaged over multiple frames.
+
+# Toni Giorgino, ISIB-Consiglio Nazionale delle Ricerche, 2012
+# http://multiscalelab.org/utilities/DensityProfileTool
+
 
 package provide density_profile 1.0
 
