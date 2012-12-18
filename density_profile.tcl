@@ -14,7 +14,7 @@ namespace eval ::density_profile:: {
     # Variables matching command line options
     variable dp_args
     variable dp_args_defaults {
-	rho             atoms
+	rho             number
 	selection       all
 	axis            z
 	resolution      1
@@ -55,7 +55,7 @@ proc ::density_profile::density_profile_usage { } {
 	puts "   -$k $dp_args($k)"
     }
     puts " "
-    puts "Density  -rho  is one of  {atoms|mass|charge|electrons}"
+    puts "Density  -rho  is one of  {number|mass|charge|electrons}"
     puts "See documentation at http://multiscalelab.org/utilities/DensityProfileTool"
 }
 
@@ -329,7 +329,7 @@ proc ::density_profile::get_rho {} {
     variable dp_args
     set as [atomselect top $dp_args(selection)]
     switch $dp_args(rho) {
-	atoms { 
+	number { 
 	    set tval [lrepeat [$as num] 1] 
 	}
 	mass { 
@@ -347,7 +347,7 @@ proc ::density_profile::get_rho {} {
 	}
 	default {
 	    $as delete
-	    error "Unknown rho, must be one of {atoms|mass|charge|electrons}"
+	    error "Unknown rho, must be one of {number|mass|charge|electrons}"
 	}
     }
     $as delete
