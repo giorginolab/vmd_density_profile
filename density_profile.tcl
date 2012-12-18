@@ -8,6 +8,7 @@
 
 
 package provide density_profile 1.0
+package require topotools
 
 # Declare the namespace for this dialog
 namespace eval ::density_profile:: {
@@ -18,7 +19,7 @@ namespace eval ::density_profile:: {
 	selection       all
 	axis            z
 	resolution      1
-	Zsource         type
+	Zsource         mass
 	partial_charges 1
 	frame_from      now
 	frame_to        now
@@ -26,9 +27,6 @@ namespace eval ::density_profile:: {
 	average		0
     }
     array set dp_args $dp_args_defaults
-
-    # Atom numbers - only the first letter counts
-    variable name_to_Z {H 1  C 6  N 7  O 8  F 9  P 15  S 16}
 
     # List of args in "preferred" order
     variable dp_args_list {rho selection axis resolution Zsource partial_charges \
@@ -356,32 +354,30 @@ proc ::density_profile::get_rho {} {
 
 
 # Similar to [atomselect get ...] , but get Z number, based on the
-# $Zsource attribute and name_to_Z table.
+# $Zsource option  . Requires an atomselection
 proc ::density_profile::getZ {as} {
     variable dp_args
-    variable name_to_Z
+    set attr $dp_args(Zsource)
 
-    set nlist [$as get $dp_args(Zsource)]
-    set res {}
-    set unk {}
-    set warns 0
+    # If anything different than element was required, use
+    # topotools. This will modify the "element" attribute, so make a
+    # backup and restore when done.
+    if { $attr == "element" } {
+	set res [$as get atomicnumber]
+    } else {
+	set o_Z [$as get atomicnumber]
+	topo guessatom element $attr
+	set res [$as get atomicnumber]
+	$as set atomicnumber $o_Z
+    }
 
-    array set ztable $name_to_Z
-    foreach n $nlist {
-	set el [string range $n 0 0]
-	if {[info exists ztable($el)]} {
-	    set zn $ztable($el)
-	} else {
-	    if { ![info exists warn($n) ] } {
-		puts "Error: unidentified atom $n"
-		lappend unk $n
-	    } 
-	    set zn 0 
-	}
-	lappend res $zn
+    # Z=0 or Z=-1 means unidentified
+    if { [lsearch $res 0 ] != -1 || 
+	 [lsearch $res -1] != -1} {
+	error "Could not guess element for some atoms." 
     }
-    if {[llength $unk]>0} {
-	error "Atomic numbers for the following \"$Zsource\" atom attributes could not be inferred: $unk." 
-    }
+
     return $res
 }
+
+
