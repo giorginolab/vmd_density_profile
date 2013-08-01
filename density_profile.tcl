@@ -86,7 +86,7 @@ proc ::density_profile::density_profile {args} {
     } 
     eval parse_args $args
 
-    parray dp_args
+    # parray dp_args
 
     # Compute the bare histogram
     set lhist [compute]
@@ -326,6 +326,9 @@ proc ::density_profile::get_framelist {} {
 proc ::density_profile::get_rho {} {
     variable dp_args
     set as [atomselect top $dp_args(selection)]
+    if { [$as num]==0 } {
+	error "Atom selection did not match any atom."
+    }
     switch $dp_args(rho) {
 	number { 
 	    set tval [lrepeat [$as num] 1] 
