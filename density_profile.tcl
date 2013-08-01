@@ -327,6 +327,7 @@ proc ::density_profile::get_rho {} {
     variable dp_args
     set as [atomselect top $dp_args(selection)]
     if { [$as num]==0 } {
+	$as delete
 	error "Atom selection did not match any atom."
     }
     switch $dp_args(rho) {
