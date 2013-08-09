@@ -24,7 +24,7 @@ source [file join $density_profile_gui::SCRIPTDIR density_profile_gui_ui.tcl]
 # ----------------------------------------
 
 # This code is a mess because it can be loaded back in guibuilder.
-package provide density_profile_gui 1.0
+package provide density_profile_gui 1.1
 
 # VMD-specific stuff. If invoked from VMD, load the backed functions
 # (in package density_profile) and setup some defaults.
@@ -111,7 +111,7 @@ Toni Giorgino <toni.giorgino@isib.cnr.it>
 Institute of Biomedical Engineering (ISIB)
 National Research Council of Italy (CNR)
 
-Copyright (c) 2010-2012
+Copyright (c) 2010-2013
 
 Previous versions: 
 Computational Biophysics Group
@@ -126,6 +126,8 @@ Universitat Pompeu Fabra (UPF)
 # Uses density_profile::compute to do the backend computation
 proc density_profile_gui::do_plot {} {
     variable ::density_profile::dp_args
+    variable density_profile_window
+
     set selection  $dp_args(selection)
     set axis       $dp_args(axis)
     set resolution $dp_args(resolution)
@@ -133,14 +135,15 @@ proc density_profile_gui::do_plot {} {
 
     # Make sure pbcs are set or warn
     set area [density_profile::transverse_area]
-    if { $area == -1 } { 	
-	set answer [ tk_messageBox -icon question -message "No periodic cell information. Will compute linear densities instead of volume densities. Continue?" -type okcancel ]
+    if { [llength $area] == 1 && $area == -1 } { 	
+	set answer [ tk_messageBox -icon question -message "No periodic cell information. Will compute linear densities instead of volume densities. Continue?" \
+			 -type okcancel  -parent $density_profile_window]
 	switch -- $answer {
 	    ok { set area 1 }
 	    cancel { error "Cancelled" }
 	}
-    } elseif { $area == -2 } {
-	tk_messageBox -icon error -message "Only orthorombic cells are supported" -title Error
+    } elseif { [llength $area] == 1 && $area == -2 } {
+	tk_messageBox -icon error -message "Only orthorombic cells are supported" -title Error  -parent $density_profile_window
 	error "Only orthorombic cells are supported"
     }
 

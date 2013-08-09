@@ -1,4 +1,4 @@
-VMD Density Profile Tool v 1.0
+VMD Density Profile Tool v 1.1
 ========================================
 
 13-May-2013

@@ -7,8 +7,9 @@
 # http://multiscalelab.org/utilities/DensityProfileTool
 
 
-package provide density_profile 1.0
+package provide density_profile 1.1
 package require topotools
+package require pbctools
 
 # Declare the namespace for this dialog
 namespace eval ::density_profile:: {
@@ -195,16 +196,18 @@ proc ::density_profile::compute { } {
 
     # Check if PBC box is set
     set area [transverse_area]
-    if { $area == -1 } { 	
-	puts "Warning: No periodic cell information. Computing linear densities instead of volume densities."
-	set area 1
-    } elseif { $area <= -2 } {
-	error "Cannot compute density, check arguments."
+    set area_len [llength $area]
+    if { $area_len == 1 } {
+	if { $area == -1 } { 	
+	    puts "Warning: No periodic cell information. Computing linear densities instead of volume densities."
+	    set area [lrepeat [molinfo top get numframes] 1.0]
+	} elseif { $area <= -2 } {
+	    error "Cannot compute density, check arguments."
+	}
     }
     
     # Values
-    set tval [get_rho]
-    set tval [vecscale [expr 1./$area/$resolution] $tval]
+    set rho [get_rho]
 
     # Build atomselection
     set as [atomselect top $dp_args(selection)]
@@ -216,11 +219,16 @@ proc ::density_profile::compute { } {
 	$as frame $f
 	set xval [$as get $axis]
 
+	# get area now and normalize density
+	set area_now [lindex $area $f]
+
 	# make histogram: hist(frame,bin)
-	foreach x $xval v $tval {
+	foreach x $xval v $rho {
+	    set vn [expr $v/$area_now/$resolution]
+	    # bin
 	    set bin [expr int(floor($x/$resolution))]
-	    if {! [info exists hist($f,$bin)] } { set hist($f,$bin) 0 }
-	    set hist($f,$bin) [expr $hist($f,$bin)+$v]
+	    if {! [info exists hist($f,$bin)] } { set hist($f,$bin) 0.0 }
+	    set hist($f,$bin) [expr $hist($f,$bin)+$vn]
 	}
     }
     $as delete
@@ -239,30 +247,35 @@ proc ::density_profile::compute { } {
 #   -1 if LINEAR densities can be still computed,
 #   -2 if non-orthorhombic
 #   -3 if wrong axis
-#  else return transversal PBC area 
+#  else return a list of the transversal PBC area per frame
 proc ::density_profile::transverse_area { } {
     variable dp_args
     set axis $dp_args(axis)
-    lassign [molinfo top get {a b c alpha beta gamma}] a b c alpha beta gamma
+    set pb_list [pbc get -all]
+    set area_list {};		# to hold results
 
-    # heuristic for unset box
-    if {$a<2 || $b<2 || $c<2} {	
-	return -1
-    } elseif {$alpha!= 90 || $beta!=90 || $gamma!=90} {
-	puts "Only orthorombic cells are supported"
-	return -2
-    } else {
-	switch -- $axis {
-	    x { set area [expr $b*$c] }
-	    y { set area [expr $a*$c] }
-	    z { set area [expr $a*$b] }
-	    default {
-		puts "Wrong axis $axis, must be one of x,y or z"
-		set area -3
+    foreach pb $pb_list {
+	lassign $pb a b c alpha beta gamma
+	# heuristic for unset box
+	if {$a<2 || $b<2 || $c<2} {	
+	    return -1;		# immediately
+	} elseif {$alpha!= 90 || $beta!=90 || $gamma!=90} {
+	    puts "Only orthorombic cells are supported"
+	    return -2;		# immediately
+	} else {
+	    switch -- $axis {
+		x { set area [expr $b*$c] }
+		y { set area [expr $a*$c] }
+		z { set area [expr $a*$b] }
+		default {
+		    puts "Wrong axis $axis, must be one of x,y or z"
+		    set area -3
+		}
 	    }
+	    lappend area_list $area
 	}
-	return $area
     }
+    return $area_list
 }
 
 
