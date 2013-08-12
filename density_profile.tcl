@@ -221,10 +221,10 @@ proc ::density_profile::compute { } {
 
 	# get area now and normalize density
 	set area_now [lindex $area $f]
+	set rho_norm [vecscale [expr 1./$area_now/$resolution] $rho]
 
 	# make histogram: hist(frame,bin)
-	foreach x $xval v $rho {
-	    set vn [expr $v/$area_now/$resolution]
+	foreach x $xval vn $rho_norm {
 	    # bin
 	    set bin [expr int(floor($x/$resolution))]
 	    if {! [info exists hist($f,$bin)] } { set hist($f,$bin) 0.0 }
