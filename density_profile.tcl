@@ -219,7 +219,8 @@ proc ::density_profile::compute { } {
 	$as frame $f
 	set xval [$as get $axis]
 
-	# get area now and normalize density
+	# get area now and normalize density 
+	# TODO profile
 	set area_now [lindex $area $f]
 	set rho_norm [vecscale [expr 1./$area_now/$resolution] $rho]
 
@@ -315,7 +316,7 @@ proc ::density_profile::fill_keys arr {
 
 
 # Auxiliary function, returns {from to step}, after possibly fixing
-# "now"
+# "now". TODO first, last
 proc ::density_profile::get_framelist {} {
     variable dp_args
     set f $dp_args(frame_from)
@@ -357,7 +358,7 @@ proc ::density_profile::get_rho {} {
 	    set tval [getZ $as]
 	    if {$dp_args(partial_charges)==1} {
 		set pch [$as get charge]
-		set tval [vecadd $tval $pch]
+		set tval [vecsub $tval $pch]
 	    }
 	}
 	default {
