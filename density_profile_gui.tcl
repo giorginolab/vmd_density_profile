@@ -107,13 +107,11 @@ VMD Density Profile Tool
 
 Version [package versions density_profile]
 
-Toni Giorgino <toni.giorgino@isib.cnr.it>
+Toni Giorgino <toni.giorgino isib.cnr.it>
 Institute of Biomedical Engineering (ISIB)
 National Research Council of Italy (CNR)
 
-Copyright (c) 2010-2013
-
-Previous versions: 
+Until 2011: 
 Computational Biophysics Group
 Research Programme on Biomedical Informatics (GRIB-IMIM)
 Universitat Pompeu Fabra (UPF)

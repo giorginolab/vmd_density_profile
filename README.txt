@@ -18,11 +18,12 @@ Check the current version of software and documentation at:
     http://multiscalelab.org/utilities/DensityProfileTool
 
 
-Please cite this (forthcoming) paper when publishing
+Please cite this paper when publishing
 results obtained with the Density Profile Tool:
 
     Toni Giorgino, Computing 1-D atomic densities in macromolecular
-	simulations: the Density Profile Tool for VMD, (to appear).
+	simulations: the Density Profile Tool for VMD, Computer 
+	Physics Communications (XX-XXX).
 
 
 [1] Visual Molecular Dynamics (VMD), http://www.ks.uiuc.edu/Research/vmd/
