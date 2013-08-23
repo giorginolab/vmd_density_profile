@@ -1,3 +1,5 @@
+::MultiPlot::Plot5::plothandle configure -hline {.333 -dash "." -fill blue} -plot
+
 
 export TCLLIBPATH=$PWD
 
