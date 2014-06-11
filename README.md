@@ -13,29 +13,32 @@ frames.
  *  Charge density
  *  Electron density, i.e. average number of electrons. 
 
-
-Check the current version of software and documentation at:
-    http://multiscalelab.org/utilities/DensityProfileTool
-
-
-Please cite this paper when publishing
-results obtained with the Density Profile Tool:
-
-    Toni Giorgino, Computing 1-D atomic densities in macromolecular
-	simulations: the Density Profile Tool for VMD, Computer 
-	Physics Communications (XX-XXX).
-
-
 [1] Visual Molecular Dynamics (VMD), http://www.ks.uiuc.edu/Research/vmd/
 
 
 Author
 ----------------------------------------
 Toni Giorgino
+
 Institute of Biomedical Engineering (ISIB)
+
 National Research Council of Italy (CNR)
+
 toni.giorgino at isib.cnr.it
 
+
+
+Citation
+----------------------------------------
+
+Please cite this paper when publishing results obtained with the
+Density Profile Tool:
+
+    Giorgino T. Computing 1-D atomic densities in macromolecular
+    simulations: The density profile tool for VMD. Computer Physics
+    Communications [Internet]. 2014 Jan [cited 2013 Nov
+    26];185(1):317–22. Available from:
+    http://www.sciencedirect.com/science/article/pii/S0010465513002956
 
 
 
@@ -64,6 +67,7 @@ usage. The script
 
 Sample output for point 2.:
 
+~~~~~~
 	| Bin breaks coordinates: (z, Angstroms)
 		| Density of water in each bin: (g/mol/A^3)
 	 -35.00	  0.00
@@ -85,12 +89,12 @@ Sample output for point 2.:
 	  32.00	  0.60
 	  33.00	  0.25
 	  34.00	  0.00
-
+~~~~~~
 
 	
 
 
-Description of the included files
+Included files
 ----------------------------------------
 
 File                          | Description
