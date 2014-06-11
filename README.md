@@ -1,4 +1,4 @@
-VMD Density Profile Tool v 1.1
+VMD Density Profile Tool
 ========================================
 
 13-May-2013
@@ -18,12 +18,9 @@ frames.
 
 Author
 ----------------------------------------
-Toni Giorgino
-
-Institute of Biomedical Engineering (ISIB)
-
-National Research Council of Italy (CNR)
-
+Toni Giorgino <br>
+Institute of Biomedical Engineering (ISIB)  <br>
+National Research Council of Italy (CNR)  <br>
 toni.giorgino at isib.cnr.it
 
 
@@ -36,9 +33,9 @@ Density Profile Tool:
 
     Giorgino T. Computing 1-D atomic densities in macromolecular
     simulations: The density profile tool for VMD. Computer Physics
-    Communications [Internet]. 2014 Jan [cited 2013 Nov
-    26];185(1):317–22. Available from:
+    Communications. 2014 Jan;185(1):317–22. Available from:
     http://www.sciencedirect.com/science/article/pii/S0010465513002956
+    (preprint available on arXiv)
 
 
 
