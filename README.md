@@ -92,12 +92,13 @@ Sample output for point 2.:
 
 Description of the included files
 ----------------------------------------
-density_profile.tcl		Core functions and command line interface 
-density_profile_gui.tcl		Functions providing the graphical user
-				interface (GUI)
-density_profile_init.tcl	Require loading the GUI (meant to run 
-				at VMD startup)
-example.tcl			Example of use in scripting (see above)
+
+File                          | Description
+----------------------------  | ----------------
+density_profile.tcl	      | Core functions and command line interface 
+density_profile_gui.tcl	      | Functions providing the graphical user interface (GUI)
+density_profile_init.tcl      | Require loading the GUI (meant to run at VMD startup)
+example.tcl		      | Example of use in scripting (see above)
 
 
 
