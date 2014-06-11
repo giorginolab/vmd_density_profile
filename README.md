@@ -31,8 +31,8 @@ Citation
 Please cite this paper when publishing results obtained with the
 Density Profile Tool:
 
- *  Giorgino T. Computing 1-D atomic densities in macromolecular
-    simulations: The density profile tool for VMD. Computer Physics
+ *  Giorgino T. *Computing 1-D atomic densities in macromolecular
+    simulations: The density profile tool for VMD.* Computer Physics
     Communications. 2014 Jan;185(1):317–22. Available from:
     http://www.sciencedirect.com/science/article/pii/S0010465513002956
     (preprint available on arXiv)
@@ -54,6 +54,7 @@ Installation
 
 Quickstart
 ----------------------------------------
+
 Once correctly installed, a menu item should appear in VMD's
 Extensions menu, under "Extensions>Analysis>Density Profile Tool".
 
@@ -95,7 +96,18 @@ Sample output for point 2.:
   34.00	  0.00
 ~~~~~~
 
+
 	
+Documentation
+---------------------
+
+Further documentation is available at
+http://multiscalelab.org/utilities/DensityProfileTool .
+
+For an extensive description of the tool, together with the comparison
+with experimental data, see the [Density Profile paper](http://www.sciencedirect.com/science/article/pii/S0010465513002956) 
+
+
 
 
 Included files
