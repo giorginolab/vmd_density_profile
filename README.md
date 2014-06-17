@@ -48,7 +48,34 @@ Installation
 2. Add the following instructions to your ```.vmdrc``` file 
 
         lappend auto_path /WHERE/YOU/EXTRACTED/THE/TOOL
+        vmd_install_extension density_profile_gui density_profile_gui::density_profile_tk "Analysis/Density Profile Tool"
         menu main on
+
+
+	
+Documentation
+---------------------
+
+Further documentation is available at
+http://multiscalelab.org/utilities/DensityProfileTool .
+
+For an extensive description of the tool, together with the comparison
+with experimental data, see the [Density Profile paper](http://www.sciencedirect.com/science/article/pii/S0010465513002956) 
+
+
+
+
+Included files
+----------------------------------------
+
+File                          | Description
+----------------------------  | ----------------
+density_profile.tcl	      | Core functions and command line interface 
+density_profile_gui.tcl	      | Functions providing the graphical user interface (GUI)
+density_profile_init.tcl      | Require loading the GUI (meant to run at VMD startup)
+example.tcl		      | Example of use in scripting (see above)
+
+
 
 
 
@@ -95,32 +122,6 @@ Sample output for point 2.:
   33.00	  0.25
   34.00	  0.00
 ~~~~~~
-
-
-	
-Documentation
----------------------
-
-Further documentation is available at
-http://multiscalelab.org/utilities/DensityProfileTool .
-
-For an extensive description of the tool, together with the comparison
-with experimental data, see the [Density Profile paper](http://www.sciencedirect.com/science/article/pii/S0010465513002956) 
-
-
-
-
-Included files
-----------------------------------------
-
-File                          | Description
-----------------------------  | ----------------
-density_profile.tcl	      | Core functions and command line interface 
-density_profile_gui.tcl	      | Functions providing the graphical user interface (GUI)
-density_profile_init.tcl      | Require loading the GUI (meant to run at VMD startup)
-example.tcl		      | Example of use in scripting (see above)
-
-
 
 
 
