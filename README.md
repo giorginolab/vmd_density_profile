@@ -42,14 +42,9 @@ Density Profile Tool:
 Installation
 ----------------------------------------
 
-1. Download the latest release and extract it in a directory of your
-   choice. 
+See instructions [here](https://gist.github.com/tonigi/a9cfaf7642a7fbc13293).
 
-2. Add the following instructions to your ```.vmdrc``` file 
 
-        lappend auto_path /WHERE/YOU/EXTRACTED/THE/TOOL
-        vmd_install_extension density_profile_gui density_profile_gui::density_profile_tk "Analysis/Density Profile Tool"
-        menu main on
 
 
 	
