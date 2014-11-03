@@ -26,6 +26,10 @@ source [file join $density_profile_gui::SCRIPTDIR density_profile_gui_ui.tcl]
 # This code is a mess because it can be loaded back in guibuilder.
 package provide density_profile_gui 1.1
 
+namespace eval density_profile_gui {
+    variable already_registered 0
+}
+
 # VMD-specific stuff. If invoked from VMD, load the backed functions
 # (in package density_profile) and setup some defaults.
 set density_profile_gui::in_vmd [string length [info proc vmd_install_extension]]
@@ -51,6 +55,15 @@ proc density_profile_gui::density_profile_tk {} {
     return $density_profile_window
 }
 
+# Register menu if possible
+proc density_profile_gui::register_menu {} {
+    variable already_registered
+    if {$already_registered==0} {
+	incr already_registered
+	vmd_install_extension density_profile_gui density_profile_gui::density_profile_tk "Analysis/Density Profile Tool"
+    }
+}
+					
 
 
 # Only enable Z-related controls for electron densities

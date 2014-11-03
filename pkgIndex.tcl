@@ -8,10 +8,10 @@
 # script is sourced, the variable $dir must contain the
 # full path name of this file's directory.
 
+
 package ifneeded density_profile 1.1 [list source [file join $dir density_profile.tcl]]
 package ifneeded density_profile_gui 1.1 [list source [file join $dir density_profile_gui.tcl]]
 
-
-# May throw error if not under gui, or already registered. They must be ignored.
-catch {	package require density_profile_gui; menu tk register density_profile_gui density_profile_gui::density_profile_tk "Analysis/Density Profile Tool" } msg
+# Piggy-back the pkgIndex mechanism to register in extension menu (only once)
+catch { package require density_profile_gui; density_profile_gui::register_menu; }
 
