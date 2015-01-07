@@ -1,7 +1,6 @@
 VMD Density Profile Tool
 ========================================
 
-13-May-2013
 
 The Density Profile Tool is a VMD [1] analysis plugin that computes
 1-D projections of various atomic densities. The computation may be
@@ -60,18 +59,6 @@ with experimental data, see the [Density Profile paper](http://www.sciencedirect
 
 
 
-Included files
-----------------------------------------
-
-File                          | Description
-----------------------------  | ----------------
-density_profile.tcl	      | Core functions and command line interface 
-density_profile_gui.tcl	      | Functions providing the graphical user interface (GUI)
-density_profile_init.tcl      | Require loading the GUI (meant to run at VMD startup)
-example.tcl		      | Example of use in scripting (see above)
-
-
-
 
 
 Quickstart
@@ -120,3 +107,21 @@ Sample output for point 2.:
 
 
 
+License
+---------------
+
+Density Profile Plugin
+Copyright (C) 2012 
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
