@@ -1,11 +1,6 @@
 VMD Density Profile Tool (1.1)
 ==============================
 
-Toni Giorgino
-
--   2012-2013 (ISIB-CNR) Consiglio Nazionale delle Ricerche
-
-    2011 (GRIB-IMIM-UPF) Computational Biophysics Laboratory
 
 The *Density Profile Tool* is a VMD analysis plugin that computes 1-D projections of various atomic densities. The computation can be performed in a single frame, a trajectory, or averaged over multiple frames.
 
@@ -107,23 +102,32 @@ Assuming that periodic box information is available, results are given in the fo
 
 -   1 amu/Å<sup>3</sup> = 1.66 g/cm<sup>3</sup> = 1660 kg/m<sup>3</sup>
 
+
+
 Example
 -------
 
-See attached screenshots. Left: solvent density profile around a POPC membrane. Note how the water density in bulk goes to the macroscopic value of 18/30 amu/Å³. Right: electron density profile of a POPC membrane (solvent included).
+See attached screenshots. 
 
-![attachment:POPC-waters-mass-density-profile.png](POPC-waters-mass-density-profile.png)]  ![attachment:POPC-e-density-profile.png](POPC-e-density-profile.png)](http://www1.multiscalelab.org/utilities/DensityProfileTool/utilities/DensityProfileTool?action=AttachFile&do=get&target=POPC-e-density-profile.png)
+Solvent density profile around a POPC membrane. Note how the water density in bulk goes to the macroscopic value of 18/30 amu/Å³.
+
+![attachment:POPC-waters-mass-density-profile.png](POPC-waters-mass-density-profile.png)
+
+
+Electron density profile of a POPC membrane (solvent included).
+
+![attachment:POPC-e-density-profile.png](POPC-e-density-profile.png)](http://www1.multiscalelab.org/utilities/DensityProfileTool/utilities/DensityProfileTool?action=AttachFile&do=get&target=POPC-e-density-profile.png)
 
 
 
 Limitations
 -----------
 
--   atoms are assumed as point-like
+-   Atoms are assumed as point-like;
 
--   only orthorhombic cells are supported
+-   only orthorhombic cells are supported;
 
--   to compute volumetric densities, cell information must be present for *all* frames
+-   to compute volumetric densities, cell information must be present for *all* frames.
 
 
 
@@ -135,5 +139,5 @@ Screenshot
 Acknowledgments
 ---------------
 
-Partial support from the Agència de Gestió d'Ajuts Universitaris i de Recerca - Generalitat de Catalunya is gratefully acknowledged.
+Former support from the Agència de Gestió d'Ajuts Universitaris i de Recerca - Generalitat de Catalunya is gratefully acknowledged.
 
