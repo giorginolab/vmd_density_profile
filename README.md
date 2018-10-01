@@ -18,9 +18,8 @@ frames.
 Author
 ----------------------------------------
 Toni Giorgino <br>
-Institute of Biomedical Engineering (ISIB)  <br>
 National Research Council of Italy (CNR)  <br>
-toni.giorgino at isib.cnr.it
+toni.giorgino at cnr.it
 
 
 
@@ -50,8 +49,7 @@ See instructions [here](https://gist.github.com/tonigi/a9cfaf7642a7fbc13293).
 Documentation
 ---------------------
 
-Further documentation is available at
-http://multiscalelab.org/utilities/DensityProfileTool .
+Further documentation is available in the `doc` subdirectory.
 
 For an extensive description of the tool, together with the comparison
 with experimental data, see the [Density Profile paper](http://www.sciencedirect.com/science/article/pii/S0010465513002956) 
