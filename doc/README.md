@@ -116,7 +116,7 @@ Solvent density profile around a POPC membrane. Note how the water density in bu
 
 Electron density profile of a POPC membrane (solvent included).
 
-![attachment:POPC-e-density-profile.png](POPC-e-density-profile.png)](http://www1.multiscalelab.org/utilities/DensityProfileTool/utilities/DensityProfileTool?action=AttachFile&do=get&target=POPC-e-density-profile.png)
+![attachment:POPC-e-density-profile.png](POPC-e-density-profile.png)]
 
 
 
@@ -134,7 +134,7 @@ Limitations
 Screenshot
 ----------
 
-![Screenshot-Density Profile Tool.png](Screenshot-Density Profile Tool.png)
+![attachment:Screenshot-Density Profile Tool.png](Screenshot-Density Profile Tool.png)
 
 Acknowledgments
 ---------------
