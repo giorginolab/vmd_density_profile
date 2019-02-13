@@ -1,4 +1,4 @@
-VMD Density Profile Tool (1.1)
+VMD Density Profile Tool (1.3)
 ==============================
 
 
@@ -49,6 +49,10 @@ When dealing with a trajectory, the behaviour depends on the *average* check box
 If periodic cell information is available in the molecule (e.g. as set in *pbctools*), the density will be properly normalized with respect to the volume. Otherwise, it will be simply projected along a linear axis. **IMPORTANT: you will still need to wrap the trajectory yourself.**
 
 *Electron density* calculations require the atomic number *Z* (i.e., the element) to be known for each atom. This information may be obtained from either the *mass*, *name*, *type*, or *element* atom properties (see VMD manual). Selecting ***mass* is highly recommended** because *element* is usually unset, and guessing from *type* or *name* requires error-prone heuristics. Atomic number guessing is based on the [topotools guessatom](http://www.ks.uiuc.edu/Research/vmd/plugins/topotools/#TOC-guessatom-property-from-) function and algorithm. Note that the heuristics will likely be inappropriate in the case of united atom/coarse grain forcefields.
+
+
+![Screenshot](Screenshot-Density%20Profile%20Tool.png)
+
 
 Usage (command line)
 --------------------
@@ -131,10 +135,6 @@ Limitations
 
 
 
-Screenshot
-----------
-
-![Screenshot](Screenshot-Density%20Profile%20Tool.png)
 
 
 Acknowledgments
