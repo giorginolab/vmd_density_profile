@@ -4,7 +4,8 @@
 # frame, a trajectory, or averaged over multiple frames.
 
 # Toni Giorgino, ISIB-Consiglio Nazionale delle Ricerche, 2012
-# http://multiscalelab.org/utilities/DensityProfileTool
+# http://doi.org/10.1016/j.cpc.2013.08.022
+# https://github.com/giorginolab/vmd_density_profile
 
 
 package provide density_profile 1.1
@@ -55,7 +56,7 @@ proc ::density_profile::density_profile_usage { } {
     }
     puts " "
     puts "Density  -rho  is one of  {number|mass|charge|electrons}"
-    puts "See documentation at http://multiscalelab.org/utilities/DensityProfileTool"
+    puts "See documentation at https://github.com/giorginolab/vmd_density_profile"
 }
 
 

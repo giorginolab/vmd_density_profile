@@ -107,7 +107,7 @@ proc density_profile_gui::transpose {matrix} {
 }
 
 proc density_profile_gui::help_docs {} {
-    vmd_open_url http://multiscalelab.org/utilities/DensityProfileTool
+    vmd_open_url https://doi.org/10.1016/j.cpc.2013.08.022
 }
 
 proc density_profile_gui::help_about {} {
@@ -118,8 +118,7 @@ VMD Density Profile Tool
 
 Version [package versions density_profile]
 
-Toni Giorgino <toni.giorgino isib.cnr.it>
-Institute of Biomedical Engineering (ISIB)
+Toni Giorgino <toni.giorgino cnr.it>
 National Research Council of Italy (CNR)
 
 Until 2011: 
